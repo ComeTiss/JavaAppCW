@@ -1,0 +1,84 @@
+Application: Training+Diet plan
+Enable user to see his daily/weekly/monthly plan
+
+LAYOUT
+- sign up / sign in page
+- Home page: by default shows your day plan
+- Activity page
+    >> 2 tabs: Category/Favourites
+- Meals page
+    >> 2 tabs: Category/Favourites
+
+- Bottom Horizontal menu
+
+---------------------------------------------
+|                                       -   |
+|                                     | + | |   Add Meal / Activity
+|                                       -   |
+|                                           |
+|                                       -   |
+|                                     | S | |   Settings button (not necessary to start with)
+|                                       -   |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+|                                           |
+---------------------------------------------
+|     Meals    |    Home    |    Activity   |
+---------------------------------------------
+
+AUTHENTICATION
+- A user can create an account
+- A user can log to his account using credentials
+
+HOME PAGE
+- A user can see his day plan
+    >> can switch to week/month plan
+    >> can view his settings
+- A user can add a meal to a day
+- A user can add an activity to a day
+
+ADDING ACTIVITY
+
+** Activity details **
+- day & time
+- duration
+- category
+- title
+- description
+- favourite?
+
+**  Create **
+- A user can create from scratch
+- A user can create from a 'Favourite' activity
+- A user must select a category
+--> either select from 'His categories'
+--> or add a new category
+- A user can mark this activity as 'Favourite'
+
+ADDING MEAL
+
+** Activity details **
+- day & time
+- category
+- title
+- ingredients
+- favourite?
+
+** Create **
+- A user can create from scratch
+- A user can create from a 'Favourite' meal
+- A user must select a category
+- A user can mark this activity as 'Favourite'
+- A user must enter the day & time
+
+CATEGORIES
+
+- meals: pre-set (breakfast/lunch/dinner/snack)
+- trainings: user input + potential search bar if using API
