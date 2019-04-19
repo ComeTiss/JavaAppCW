@@ -1,0 +1,10 @@
+Home Page design
+----------------
+
+1. Display Today's training only with dummy data (no database)
+   Not time related: today isn't really today's date
+
+--> a) display dummy data 'hard coded'
+--> b) button 'ADD' redirecting to 'create interface': choose meal or training
+--> c) create meal/training page: input data added to like array list (no database yet)
+

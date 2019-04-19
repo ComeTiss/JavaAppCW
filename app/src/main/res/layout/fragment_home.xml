@@ -1,24 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark">
 
     <TextView
-        android:id="@+id/pageTitleText"
+        android:id="@+id/homeTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginRight="124dp"
+        android:text="Today's Plan"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/button2"
+    <TextView
+        android:id="@+id/EmptyDayMsgText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
-        android:text="Add"
-        android:layout_centerInParent="true"
-        android:layout_above="@id/pageTitleText"/>
+        android:layout_alignBottom="@+id/homeTitleText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-183dp"
+        android:text=""
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <ListView
+        android:id="@+id/HomeListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/homeTitleText"
+        android:layout_marginTop="70dp"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/Add_floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/homeTitleText"
+        android:layout_alignStart="@+id/homeTitleText"
+        android:layout_alignLeft="@+id/homeTitleText"
+        android:layout_marginStart="209dp"
+        android:layout_marginLeft="209dp"
+        android:layout_marginTop="-100dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/background_light"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
 
 </RelativeLayout>
