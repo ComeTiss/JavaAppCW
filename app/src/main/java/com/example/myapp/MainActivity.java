@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         args.putSerializable("trainings", trainings);
         initialFragment.setArguments(args);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                initialFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, initialFragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new
