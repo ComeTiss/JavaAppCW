@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,12 +38,23 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = inflater.inflate(R.layout.category_listview_details, null);
+        final Category category = this.categories.get(position);
 
         TextView nameTextView = (TextView) v.findViewById(R.id.TrainingCategoryTitle_titletext);
-        nameTextView.setText(this.categories.get(position).get_name());
+        nameTextView.setText(category.get_name());
+
+        // Delete Category
+        ImageButton deleteCategBtn = (ImageButton) v.findViewById(R.id.deleteTrainingCategory_button);
+        deleteCategBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DBHandler db = new DBHandler(v.getContext());
+                db.deleteOneCategory(category.get_id());
+            }
+        });
 
         return v;
     }

@@ -24,22 +24,19 @@
         android:inputType="textPersonName"
         android:text="Title" />
 
-    <EditText
-        android:id="@+id/trainingCategory_editText"
+    <Spinner
+        android:id="@+id/CreateTraining_categorySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/trainingTitle_editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Category" />
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/trainingTime_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/trainingCategory_editText"
+        android:layout_below="@+id/CreateTraining_categorySpinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:ems="10"

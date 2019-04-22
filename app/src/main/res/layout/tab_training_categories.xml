@@ -5,22 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/TrainingCategory_titletext"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="My Trainings Categories"
-        android:textColor="@color/design_default_color_primary_dark"
-        android:layout_height="wrap_content" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/AddTrainingCategory_floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="330dp"
         android:clickable="true"
         android:backgroundTint="@android:color/darker_gray"
@@ -29,7 +19,7 @@
     <ListView
         android:id="@+id/TrainingCategories_ListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="120dp" />
+        android:layout_height="673dp"
+        android:layout_marginTop="70dp" />
 
 </FrameLayout>
