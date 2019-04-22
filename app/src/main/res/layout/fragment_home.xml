@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_dark">
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/homeTitleText"
@@ -18,7 +18,7 @@
         android:layout_marginEnd="124dp"
         android:layout_marginRight="124dp"
         android:text="Today's Plan"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="30sp" />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-183dp"
         android:text=""
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="24sp" />
 
     <ListView
@@ -51,7 +51,7 @@
         android:layout_marginLeft="209dp"
         android:layout_marginTop="-100dp"
         android:clickable="true"
-        app:backgroundTint="@android:color/background_light"
+        app:backgroundTint="@android:color/darker_gray"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
 </RelativeLayout>

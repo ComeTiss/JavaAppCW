@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     // USER DATA
     ArrayList<Training> trainings = new ArrayList<>();
 
@@ -19,17 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // Add Bottom navigation menu
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         // Set default view to 'Home'
         // Load user data
-        this.initData();
         Fragment initialFragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("trainings", trainings);
-        initialFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, initialFragment).commit();
     }
@@ -51,20 +50,14 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new TrainingsFragment();
                             break;
                     }
-                    Bundle args = new Bundle();
-                    args.putSerializable("trainings", trainings);
-                    selectedFragment.setArguments(args);
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
     };
 
 
-    private void initData () {
-        this.trainings.add(new Training("Chill Jogging", "Running", "9AM"));
-        this.trainings.add(new Training("Sprint Series", "Running", "6PM"));
-    }
+    /******** USER DATA HANDLING **********/
+
+
 }
 

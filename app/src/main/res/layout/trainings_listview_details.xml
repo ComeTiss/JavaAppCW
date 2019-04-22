@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:text="Title"
         android:textSize="24sp"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/holo_blue_dark" />
 
     <TextView
         android:id="@+id/CategoryTextView"
@@ -28,7 +28,7 @@
         android:layout_marginTop="13dp"
         android:text="category"
         android:textSize="18sp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/holo_blue_dark"/>
 
     <TextView
         android:id="@+id/TimeTextView"
@@ -42,5 +42,5 @@
         android:layout_marginRight="24dp"
         android:text="DayTime"
         android:textSize="24sp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/holo_blue_dark"/>
 </RelativeLayout>

@@ -9,12 +9,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="79dp"
-        android:text="Create a Meal"
+        android:text="Create a Training"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <EditText
-        android:id="@+id/mealTitle_editText"
+        android:id="@+id/trainingTitle_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
@@ -25,10 +25,10 @@
         android:text="Title" />
 
     <EditText
-        android:id="@+id/mealCategory_editText"
+        android:id="@+id/trainingCategory_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mealTitle_editText"
+        android:layout_below="@+id/trainingTitle_editText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:ems="10"
@@ -36,23 +36,34 @@
         android:text="Category" />
 
     <EditText
-        android:id="@+id/mealTime_editText"
+        android:id="@+id/trainingTime_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mealCategory_editText"
+        android:layout_below="@+id/trainingCategory_editText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="date"
         android:text="What time ?" />
 
+    <CheckBox
+        android:id="@+id/TrainingFavorite_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trainingTime_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Save in Favorites" />
+
     <Button
-        android:id="@+id/CreateMeal_button"
+        android:id="@+id/CreateTraining_button"
         android:background="@color/design_default_color_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mealTime_editText"
+        android:layout_below="@+id/TrainingFavorite_checkBox"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:text="Create" />
+
+
 </RelativeLayout>

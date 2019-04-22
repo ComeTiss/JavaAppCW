@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ItemAdapter extends BaseAdapter {
+public class TrainingAdapter extends BaseAdapter {
 
     LayoutInflater inflater;
     ArrayList<Training> trainings = new ArrayList<>();
 
     /* Constructor */
-    ItemAdapter (Context c, ArrayList<Training> trainings) {
+    TrainingAdapter(Context c, ArrayList<Training> trainings) {
         this.trainings = trainings;
         this.inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -39,14 +39,15 @@ public class ItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = inflater.inflate(R.layout.home_listview_details, null);
+        View v = inflater.inflate(R.layout.trainings_listview_details, null);
+
         TextView titleTextView = (TextView) v.findViewById(R.id.color);
         TextView categoryTextView = (TextView) v.findViewById(R.id.CategoryTextView);
         TextView timeTextView = (TextView) v.findViewById(R.id.TimeTextView);
 
-        titleTextView.setText(this.trainings.get(position).getTitle());
-        categoryTextView.setText(this.trainings.get(position).getCategory());
-        timeTextView.setText(this.trainings.get(position).getTime());
+        titleTextView.setText(this.trainings.get(position).get_title());
+        categoryTextView.setText(this.trainings.get(position).get_category());
+        timeTextView.setText(this.trainings.get(position).get_time());
 
         return v;
     }
