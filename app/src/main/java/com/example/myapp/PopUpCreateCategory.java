@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 public class PopUpCreateCategory extends DialogFragment {
 
@@ -25,8 +27,12 @@ public class PopUpCreateCategory extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         EditText editTextCategory = (EditText) getDialog().findViewById(R.id.newCategory_editText);
                         String name = editTextCategory.getText().toString();
-                        DBHandler db = new DBHandler(getContext());
-                        db.addNewCategory(new Category(name, "Training"));
+
+                        if (name.isEmpty()) {
+                            Toast.makeText(getContext(), "Couldn't create Category", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        saveCategory(name);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -35,5 +41,17 @@ public class PopUpCreateCategory extends DialogFragment {
                     }
                 });
         return builder.create();
+    }
+
+    private void saveCategory (String name) {
+        // If correct input, add category to database
+        DBHandler db = new DBHandler(getContext());
+        db.addNewCategory(new Category(name, "Training"));
+
+        // refresh category list
+        ListView categoryListView = (ListView) getActivity().findViewById(R.id.TrainingCategories_ListView);
+        CategoryAdapter categAdapter = new CategoryAdapter(getActivity(), db.getAllCategoriesByType("Training"));
+        categoryListView .setAdapter(categAdapter);
+        Toast.makeText(getContext(), "Category added!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -41,7 +41,7 @@ public class TrainingAdapter extends BaseAdapter {
 
         View v = inflater.inflate(R.layout.trainings_listview_details, null);
 
-        TextView titleTextView = (TextView) v.findViewById(R.id.color);
+        TextView titleTextView = (TextView) v.findViewById(R.id.Title_textView);
         TextView categoryTextView = (TextView) v.findViewById(R.id.CategoryTextView);
         TextView timeTextView = (TextView) v.findViewById(R.id.TimeTextView);
 

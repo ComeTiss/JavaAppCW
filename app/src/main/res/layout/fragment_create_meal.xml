@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
@@ -43,8 +44,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="date"
-        android:text="What time ?" />
+        android:inputType="time"
+        tools:text="What time ?" />
 
     <Button
         android:id="@+id/CreateMeal_button"

@@ -14,11 +14,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="124dp"
         android:layout_marginRight="124dp"
         android:text="Today's Plan"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/background_dark"
         android:textSize="30sp" />
 
     <TextView
@@ -47,9 +47,9 @@
         android:layout_below="@+id/homeTitleText"
         android:layout_alignStart="@+id/homeTitleText"
         android:layout_alignLeft="@+id/homeTitleText"
-        android:layout_marginStart="209dp"
-        android:layout_marginLeft="209dp"
-        android:layout_marginTop="-100dp"
+        android:layout_marginStart="214dp"
+        android:layout_marginLeft="214dp"
+        android:layout_marginTop="-67dp"
         android:clickable="true"
         app:backgroundTint="@android:color/darker_gray"
         app:srcCompat="@drawable/ic_add_black_24dp" />

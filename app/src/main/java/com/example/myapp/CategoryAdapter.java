@@ -6,14 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class CategoryAdapter extends BaseAdapter {
 
-    LayoutInflater inflater;
-    ArrayList<Category> categories = new ArrayList<>();
+    private LayoutInflater inflater;
+    private final ArrayList<Category> categories;
 
     /* Constructor */
     CategoryAdapter(Context c, ArrayList<Category> categories) {

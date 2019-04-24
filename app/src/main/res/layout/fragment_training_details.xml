@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/TrainingDetails_Title_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/background_dark"
+        android:text="Training Title"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/TrainingDetails_Category_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/TrainingDetails_Title_TextView"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/background_dark"
+        android:text="(Category Name)"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/TrainingDetails_Time_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TrainingDetails_Category_TextView"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:text="Training starts: "
+        android:textSize="20dp"
+        android:textColor="@android:color/background_dark"/>
+
+    <TextView
+        android:id="@+id/TrainingDetails_TimeValue_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TrainingDetails_Time_TextView"
+        android:layout_marginLeft="200dp"
+        android:text="time value ..."
+        android:textSize="24dp"
+        android:textColor="@android:color/background_dark"/>
+
+    <TextView
+        android:id="@+id/TrainingDetails_Description_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TrainingDetails_Time_TextView"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:text="Description"
+        android:textSize="20dp"
+        android:textColor="@android:color/background_dark"/>
+
+    <TextView
+        android:id="@+id/TrainingDetails_DescriptionContent_TextView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TrainingDetails_Description_TextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:text="description content..."
+        android:textSize="18dp"
+        android:textColor="@android:color/background_dark"/>
+
+    <Button
+        android:id="@+id/TrainingDetails_deteleBtn"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:background="@android:color/holo_red_dark"
+        android:text="Delete Training"
+        android:textSize="22dp"
+        android:textColor="@android:color/white"/>
+
+</RelativeLayout>
