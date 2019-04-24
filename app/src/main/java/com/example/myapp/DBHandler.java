@@ -9,7 +9,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
+    /*** This class provides:
 
+     * APIs to create / restart database
+     * Database tables are:
+               - Trainings
+               - Categories
+     * CRUD (Create, Read, Update, Delete) APIs for each database table
+
+    ***/
+
+    // Database environment variables
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "training";
 
@@ -32,9 +42,14 @@ public class DBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    /* Creating Tables */
+
+    /********** Database APIs ************/
+
     @Override
     public void onCreate(SQLiteDatabase db) {
+        /*
+           Execute SQL script to create new Tables
+        */
         String CREATE_TABLE_TRAINING = "CREATE TABLE " + TABLE_TRAINING_DETAIL + "("
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_TITLE + " TEXT,"
@@ -54,16 +69,22 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // drop table
+        /*
+            Drop all tables
+            Create again all tables
+         */
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRAINING_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
-        // create table again
         onCreate(db);
     }
 
-    /*** CRUD APIs (Create, Read, Update, Delete) for Trainings ***/
+    /********** Trainings CRUD APIs (Create, Read, Update, Delete) ************/
 
     public void addNewTraining (Training training) {
+        /*
+            Parameters: training
+            Purpose: insert new training into database
+         */
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -79,6 +100,13 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     private Training createTrainingFromCursor (Cursor cursor) {
+        /*
+            Parameters: cursor
+            Used: only in DBHandler by 'get' & 'update' methods
+            Purpose:
+                - retrieve cursor's values
+                - create & return a new Training object
+         */
         Training t = new Training();
         t.set_id(Integer.parseInt(cursor.getString(0)));
         t.set_title(cursor.getString(1));
@@ -91,6 +119,10 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public Training getOneTraining (int trainingId) {
+        /*
+            parameters: trainingId
+            Purpose: query database training for the given id
+         */
         String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL
                 + " WHERE " + KEY_ID + "=" + trainingId;
 
@@ -105,6 +137,9 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<Training> getAllTrainings () {
+        /*
+            Purpose: query all trainings in database
+         */
         ArrayList<Training> trainingsList = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL;
@@ -122,6 +157,9 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<Training> getFavoritesTrainings () {
+        /*
+            Purpose: query all trainings in database with isFavorite = true
+         */
         ArrayList<Training> trainingsList = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL
@@ -140,11 +178,22 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public boolean deleteOneTraining (int trainingId) {
+        /*
+            Parameters: trainingId
+            Purpose: delete training from database with given id
+         */
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_TRAINING_DETAIL, KEY_ID + "=" + trainingId, null) > 0;
     }
 
     public boolean updateOneTraining (int trainingId, Training training) {
+        /*
+            Parameters: trainingId, Training (object)
+            Purpose:
+                - search in database for Training with given id
+                - replace its details with new Training (object)
+                - trainingId remains the same
+         */
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values  = new ContentValues();
 
@@ -157,10 +206,13 @@ public class DBHandler extends SQLiteOpenHelper {
         return db.update(TABLE_TRAINING_DETAIL, values, KEY_ID + "=" + trainingId, null) > 0;
     }
 
-    /*** Categories CRUD API (Create, Read, Update, Delete) ***/
+    /********** Categories CRUD APIs (Create, Read, Update, Delete) ************/
 
     public void addNewCategory (Category category) {
-
+        /*
+            Parameters: Category (object)
+            Purpose: add in database the given Category object
+         */
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -171,16 +223,17 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public boolean deleteOneCategory (int categId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_CATEGORY, KEY_ID + "=" + categId, null) > 0;
-    }
-
     public ArrayList<Category> getAllCategoriesByType(String type) {
+        /*
+            Parameters: type
+            Purpose:
+                - search in database for all Category objects with type matching given one
+                - returns a list of Category
+         */
         ArrayList<Category> categoryList= new ArrayList<>();
 
-        String selectQuery = "SELECT * FROM " + TABLE_CATEGORY;
-           //     + " WHERE " + KEY_CATEG_TYPE + "=Training";
+        String selectQuery = "SELECT * FROM " + TABLE_CATEGORY
+                + " WHERE " + KEY_CATEG_TYPE + "=" + type;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -197,4 +250,14 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return categoryList;
     }
+
+    public boolean deleteOneCategory (int categId) {
+         /*
+            Parameters: categId
+            Purpose: delete category from database with given id
+         */
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_CATEGORY, KEY_ID + "=" + categId, null) > 0;
+    }
+
 }

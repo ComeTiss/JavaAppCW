@@ -3,6 +3,12 @@ package com.example.myapp;
 import org.w3c.dom.Text;
 
 public class Training {
+    /*** This class provides:
+
+     * 3 types of constructor
+     * Getters & Setters methods for global variables (id, title, category, time, isFavorite, description)
+
+     ***/
 
     // Private variables
     private int _id;

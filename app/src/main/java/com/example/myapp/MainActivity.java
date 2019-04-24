@@ -10,27 +10,24 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    /*** This class provides:
 
+     * initialize application layout
+     * create bottom navigation menu
 
-
-    // USER DATA
-    ArrayList<Training> trainings = new ArrayList<>();
+     ***/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Add Bottom navigation menu
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         // Set default view to 'Home'
-        // Load user data
-        Fragment initialFragment = new HomeFragment();
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, initialFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new
@@ -54,10 +51,5 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
     };
-
-
-    /******** USER DATA HANDLING **********/
-
-
 }
 

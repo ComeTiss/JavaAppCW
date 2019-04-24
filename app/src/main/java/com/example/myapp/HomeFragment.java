@@ -17,7 +17,9 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     ArrayList<Training> trainings = new ArrayList<>();
-    ArrayList<Meal> meals = new ArrayList<>();
+    TextView EmptyDayMsgText;
+    ListView dataListView;
+    FloatingActionButton CreateItem_FaBtn;
 
     @Nullable
     @Override
@@ -25,33 +27,20 @@ public class HomeFragment extends Fragment {
 
         /* Brings up layout & identify widgets */
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        ListView dataListView =(ListView) v.findViewById(R.id.HomeListView);
-        FloatingActionButton CreateItem_FaBtn = (FloatingActionButton) v.findViewById(R.id.Add_floatingActionButton);
+        identifyWidgets(v);
 
         // Loading user data from database
-        DBHandler db = new DBHandler(getContext());
-        this.trainings = db.getAllTrainings();
-        if (trainings.size() == 0) {
-            setText(v, "Nothing planned yet");
-        }
+        loadTraining(v);
+
         // display user's trainings
         final TrainingAdapter trainingAdapter = new TrainingAdapter(getActivity(), trainings);
         dataListView.setAdapter(trainingAdapter);
 
         // Change to training fragment if click on it
         dataListView.setClickable(true);
-        dataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Fragment trainingFragment = new TrainingDetailsFragment();
-                Bundle args = new Bundle();
-                args.putInt ("index", position);
-                trainingFragment.setArguments(args);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, trainingFragment).commit();
-            }
-        });
+        dataListView.setOnItemClickListener(AdapterViewListener());
 
-        // Button 'Add' a training
+        // Brings up Popup when click 'add' button
         CreateItem_FaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,12 +51,32 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
-    public void setText (View v, String text) {
-        TextView EmptydayMsgText = (TextView) v.findViewById(R.id.EmptyDayMsgText);
-        EmptydayMsgText.setText(text);
+
+    private void identifyWidgets (View v) {
+        dataListView =(ListView) v.findViewById(R.id.HomeListView);
+        CreateItem_FaBtn = (FloatingActionButton) v.findViewById(R.id.Add_floatingActionButton);
+        EmptyDayMsgText = (TextView) v.findViewById(R.id.EmptyDayMsgText);
     }
 
-    public void addMeal (Meal m) {
-        this.meals.add(m);
+    private void loadTraining (View v) {
+        DBHandler db = new DBHandler(getContext());
+        this.trainings = db.getAllTrainings();
+        if (trainings.size() == 0) {
+            EmptyDayMsgText.setText("Nothing planned yet");
+        }
     }
+
+    private AdapterView.OnItemClickListener AdapterViewListener () {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Fragment trainingFragment = new TrainingDetailsFragment();
+                Bundle args = new Bundle();
+                args.putInt ("index", position);
+                trainingFragment.setArguments(args);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, trainingFragment).commit();
+            }
+        };
+    }
+
 }

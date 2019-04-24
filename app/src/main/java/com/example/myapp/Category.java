@@ -1,6 +1,12 @@
 package com.example.myapp;
 
 public class Category {
+    /*** This class provides:
+
+     * 3 types of constructor
+     * Getters & Setters methods for global variables (id, type, name)
+
+     ***/
 
     private int _id;
     private String _type;

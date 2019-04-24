@@ -99,6 +99,11 @@ public class CreateTrainingFragment extends Fragment {
     }
 
     private Training newTraining () {
+        /*
+            called once user clicked 'Submit' button
+            Retrieve input fields
+            Create & return a new Training object
+         */
         String title = titleEditText.getText().toString();
         String category = spinner.getSelectedItem().toString();
         String time = timeEditText.getText().toString();
