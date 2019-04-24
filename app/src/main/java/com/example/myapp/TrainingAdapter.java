@@ -10,6 +10,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class TrainingAdapter extends BaseAdapter {
+    /*** This class provides:
+
+     * Adapter for Training:
+            - retrieve user's training
+            - put them in ListView widget situated in home_fragment
+            - Each training appears in a layout 'training_listview_details'
+
+     ***/
 
     LayoutInflater inflater;
     ArrayList<Training> trainings = new ArrayList<>();
@@ -41,10 +49,12 @@ public class TrainingAdapter extends BaseAdapter {
 
         View v = inflater.inflate(R.layout.trainings_listview_details, null);
 
+        // identify layout widgets
         TextView titleTextView = (TextView) v.findViewById(R.id.Title_textView);
         TextView categoryTextView = (TextView) v.findViewById(R.id.CategoryTextView);
         TextView timeTextView = (TextView) v.findViewById(R.id.TimeTextView);
 
+        // add training content (title, category, time)
         titleTextView.setText(this.trainings.get(position).get_title());
         categoryTextView.setText(this.trainings.get(position).get_category());
         timeTextView.setText(this.trainings.get(position).get_time());

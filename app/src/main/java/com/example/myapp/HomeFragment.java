@@ -15,11 +15,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+    /*** This class provides:
 
-    ArrayList<Training> trainings = new ArrayList<>();
-    TextView EmptyDayMsgText;
-    ListView dataListView;
-    FloatingActionButton CreateItem_FaBtn;
+     * creates an instance HomeFragment using layout 'fragment_home'
+     * Shows a list of the user's trainings
+     * Options:
+        - click 'Add' to create a new training/meal
+        - click on training to see more about it
+
+     ***/
+
+
+    private ArrayList<Training> trainings = new ArrayList<>();
+
+    // layout widgets variables
+    private TextView EmptyDayMsgText;
+    private ListView dataListView;
+    private FloatingActionButton CreateItem_FaBtn;
 
     @Nullable
     @Override
@@ -30,7 +42,7 @@ public class HomeFragment extends Fragment {
         identifyWidgets(v);
 
         // Loading user data from database
-        loadTraining(v);
+        loadTrainings(v);
 
         // display user's trainings
         final TrainingAdapter trainingAdapter = new TrainingAdapter(getActivity(), trainings);
@@ -53,12 +65,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void identifyWidgets (View v) {
-        dataListView =(ListView) v.findViewById(R.id.HomeListView);
+        dataListView = (ListView) v.findViewById(R.id.HomeListView);
         CreateItem_FaBtn = (FloatingActionButton) v.findViewById(R.id.Add_floatingActionButton);
         EmptyDayMsgText = (TextView) v.findViewById(R.id.EmptyDayMsgText);
     }
 
-    private void loadTraining (View v) {
+    private void loadTrainings (View v) {
         DBHandler db = new DBHandler(getContext());
         this.trainings = db.getAllTrainings();
         if (trainings.size() == 0) {

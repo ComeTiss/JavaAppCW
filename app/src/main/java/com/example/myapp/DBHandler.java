@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -137,15 +138,13 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<Training> getAllTrainings () {
-        /*
-            Purpose: query all trainings in database
+        /* Purpose: query all trainings in database
          */
         ArrayList<Training> trainingsList = new ArrayList<>();
-
         String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+
 
         if (cursor.moveToFirst()) {
             do {
@@ -215,17 +214,16 @@ public class DBHandler extends SQLiteOpenHelper {
          */
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
-        values.put(KEY_CATEG_TYPE, category.get_type());
         values.put(KEY_CATEG_NAME, category.get_name());
+        values.put(KEY_CATEG_TYPE, category.get_type());
 
         db.insert(TABLE_CATEGORY, null, values);
         db.close();
     }
 
-    public ArrayList<Category> getAllCategoriesByType(String type) {
+    public ArrayList<Category> getAllCategoriesByType(String inputType) {
         /*
-            Parameters: type
+            Parameters: inputType
             Purpose:
                 - search in database for all Category objects with type matching given one
                 - returns a list of Category
@@ -233,7 +231,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ArrayList<Category> categoryList= new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + TABLE_CATEGORY
-                + " WHERE " + KEY_CATEG_TYPE + "=" + type;
+                + " WHERE " + KEY_CATEG_TYPE + "=" + inputType;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -242,8 +240,8 @@ public class DBHandler extends SQLiteOpenHelper {
             do {
                 Category category = new Category();
                 category.set_id(Integer.parseInt(cursor.getString(0)));
-                category.set_type(cursor.getString(1));
-                category.set_name(cursor.getString(2));
+                category.set_name(cursor.getString(1));
+                category.set_type(cursor.getString(2));
 
                 categoryList.add(category);
             } while (cursor.moveToNext());

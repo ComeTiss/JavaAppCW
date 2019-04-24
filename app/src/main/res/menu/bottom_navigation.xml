@@ -8,9 +8,12 @@
         android:id="@+id/nav_trainings"
         android:icon="@drawable/ic_fitness_center_black_24dp"
         android:title="Trainings"/>
+
+    <!--
     <item
         android:id="@+id/nav_meals"
         android:icon="@drawable/ic_free_breakfast_black_24dp"
         android:title="Meals"/>
+        -->
 
 </menu>

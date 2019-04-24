@@ -9,7 +9,7 @@ public class Category {
      ***/
 
     private int _id;
-    private String _type;
+    private String _type; // 1 (training), 2 (meal)
     private String _name;
 
     // Empty Constructor

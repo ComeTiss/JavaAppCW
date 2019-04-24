@@ -8,6 +8,15 @@ import android.support.v4.app.DialogFragment;
 
 
 public class PopUpCreateItemSelectType extends DialogFragment {
+    /*** This class provides:
+
+     * generates PopUp window with 2 buttons
+     * purpose: ask user to choose between creating a meal or a training
+     * It will redirect to a 'create page' (either meal/training)
+
+     */
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

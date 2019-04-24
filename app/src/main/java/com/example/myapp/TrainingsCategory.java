@@ -28,7 +28,7 @@ public class TrainingsCategory extends Fragment {
 
         /* Load data from database */
         DBHandler db = new DBHandler(getContext());
-        this.categories = db.getAllCategoriesByType("Training");
+        this.categories = db.getAllCategoriesByType("1");
 
         /* Set List View adapter */
         ListView categListView = (ListView) v.findViewById(R.id.TrainingCategories_ListView);

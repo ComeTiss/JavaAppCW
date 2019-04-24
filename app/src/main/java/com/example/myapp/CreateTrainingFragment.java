@@ -85,7 +85,7 @@ public class CreateTrainingFragment extends Fragment {
             Load Category objects from database
             Create a new arraylist containing only the category name
          */
-        ArrayList<Category> categories = db.getAllCategoriesByType("Training");
+        ArrayList<Category> categories = db.getAllCategoriesByType("1");
         categoriesNames.add(defaultCategoryName);
         for (Category cat : categories) {
             categoriesNames.add(cat.get_name());

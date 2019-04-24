@@ -46,11 +46,11 @@ public class PopUpCreateCategory extends DialogFragment {
     private void saveCategory (String name) {
         // If correct input, add category to database
         DBHandler db = new DBHandler(getContext());
-        db.addNewCategory(new Category(name, "Training"));
+        db.addNewCategory(new Category("1", name));
 
         // refresh category list
         ListView categoryListView = (ListView) getActivity().findViewById(R.id.TrainingCategories_ListView);
-        CategoryAdapter categAdapter = new CategoryAdapter(getActivity(), db.getAllCategoriesByType("Training"));
+        CategoryAdapter categAdapter = new CategoryAdapter(getActivity(), db.getAllCategoriesByType("1"));
         categoryListView .setAdapter(categAdapter);
         Toast.makeText(getContext(), "Category added!", Toast.LENGTH_SHORT).show();
     }

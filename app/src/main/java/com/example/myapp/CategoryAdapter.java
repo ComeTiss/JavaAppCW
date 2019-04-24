@@ -13,6 +13,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class CategoryAdapter extends BaseAdapter {
+    /*** This class provides:
+
+     * Adapter for Categories:
+            - retrieve user's categories
+            - put them in ListView widget situated in 'tab_training_categories'
+            - Each Category appears in a layout 'category_listview_details'
+
+     ***/
+
 
     private LayoutInflater inflater;
     private final ArrayList<Category> categories;
@@ -43,13 +52,14 @@ public class CategoryAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = inflater.inflate(R.layout.category_listview_details, null);
-        final Category category = this.categories.get(position);
-
+        ImageButton deleteCategBtn = (ImageButton) v.findViewById(R.id.deleteTrainingCategory_button);
         TextView nameTextView = (TextView) v.findViewById(R.id.TrainingCategoryTitle_titletext);
+
+        // Display category title
+        final Category category = this.categories.get(position);
         nameTextView.setText(category.get_name());
 
-        // Delete Category
-        ImageButton deleteCategBtn = (ImageButton) v.findViewById(R.id.deleteTrainingCategory_button);
+        // Delete Category button
         deleteCategBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -12,6 +12,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class TrainingDetailsFragment extends Fragment {
+    /*** This class provides:
+
+     * Fragment shows up containing all details about a training (title, category, time, description)
+     * appears when click on a training from the listView in 'fragment_home'
+     * 2 buttons available: either delete or update the training
+
+     ***/
+
+    private Button deleteBtn;
+    private Button updateBtn;
+    private TextView TitleTextView;
+    private TextView CategTextView;
+    private TextView TimeTextView;
+    private TextView DescriptionTextView;
+
+    private DBHandler db;
+    private Training training;
 
     @Nullable
     @Override
@@ -19,49 +36,62 @@ public class TrainingDetailsFragment extends Fragment {
 
         // Brings up layout & identify widgets
         View v = inflater.inflate(R.layout.fragment_training_details, container, false);
-        Button deleteBtn = (Button) v.findViewById(R.id.TrainingDetails_deteleBtn);
-        Button updateBtn = (Button) v.findViewById(R.id.TrainingDetails_updateBtn);
-        TextView TitleTextView = (TextView) v.findViewById(R.id.TrainingDetails_Title_TextView);
-        TextView CategTextView = (TextView) v.findViewById(R.id.TrainingDetails_Category_TextView);
-        TextView TimeTextView = (TextView) v.findViewById(R.id.TrainingDetails_TimeValue_TextView);
-        TextView DescriptionTextView = (TextView) v.findViewById(R.id.TrainingDetails_DescriptionContent_TextView);
-
+        identifyWidgets(v);
         // Retrieve training from Database
-        Bundle args = getArguments();
-        int index = args.getInt("index", 0);
-        final DBHandler db = new DBHandler(getContext());
-        final Training training = db.getAllTrainings().get(index);
-
-        // Puts Training info in Fragment
-        TitleTextView.setText(training.get_title());
-        CategTextView.setText(training.get_category());
-        TimeTextView.setText(training.get_time());
-        DescriptionTextView.setText(training.get_description());
+        loadTraining();
+        // Shows training info on the fragment
+        diplayTraining();
 
         // When click 'update' button
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment UpdateFragment = new UpdateTrainingFragment();
-                Bundle args = new Bundle();
-                args.putInt("id", training.get_id());
-                UpdateFragment.setArguments(args);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, UpdateFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, newTrainingFragment()).commit();
             }
         });
-
-        // When click 'delete" button
+        // When click 'delete' button
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Delete training from database
                 db.deleteOneTraining(training.get_id());
-                Toast.makeText(getContext(), "Training Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Training Deleted!", Toast.LENGTH_SHORT).show();
                 // Switch to Home fragment
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             }
         });
         return v;
+    }
+
+    private void identifyWidgets (View v) {
+        deleteBtn = (Button) v.findViewById(R.id.TrainingDetails_deteleBtn);
+        updateBtn = (Button) v.findViewById(R.id.TrainingDetails_updateBtn);
+        TitleTextView = (TextView) v.findViewById(R.id.TrainingDetails_Title_TextView);
+        CategTextView = (TextView) v.findViewById(R.id.TrainingDetails_Category_TextView);
+        TimeTextView = (TextView) v.findViewById(R.id.TrainingDetails_TimeValue_TextView);
+        DescriptionTextView = (TextView) v.findViewById(R.id.TrainingDetails_DescriptionContent_TextView);
+    }
+
+    private void loadTraining () {
+        Bundle args = getArguments();
+        int index = args.getInt("index", 0);
+        db = new DBHandler(getContext());
+        training = db.getAllTrainings().get(index);
+    }
+
+    private void diplayTraining () {
+        TitleTextView.setText(training.get_title());
+        CategTextView.setText(training.get_category());
+        TimeTextView.setText(training.get_time());
+        DescriptionTextView.setText(training.get_description());
+    }
+
+    private Fragment newTrainingFragment () {
+        Fragment UpdateFragment = new UpdateTrainingFragment();
+        Bundle args = new Bundle();
+        args.putInt("id", training.get_id());
+        UpdateFragment.setArguments(args);
+        return UpdateFragment;
     }
 }
 

@@ -37,7 +37,6 @@ public class CreateMealFragment extends Fragment {
                 // Send new meal to data storage
                 // Switch to Home fragment
                 Fragment homeFrag = new HomeFragment();
-                ((HomeFragment) homeFrag).addMeal(meal);// Later: add to database instead
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFrag).commit();
             }
         });

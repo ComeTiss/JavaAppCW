@@ -8,11 +8,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="70dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:text="Title"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@color/design_default_color_primary_dark"
         android:textSize="24sp" />
 
     <ImageButton
