@@ -100,7 +100,7 @@ public class UpdateTrainingFragment extends Fragment {
             Create a new arraylist containing only the category name
          */
         DBHandler db = new DBHandler(getContext());
-        ArrayList<Category> categories = db.getAllCategoriesByType("Training");
+        ArrayList<Category> categories = db.getAllCategoriesByType("1");
         categoriesNames.add(defaultCategoryName);
         for (Category cat : categories) {
             categoriesNames.add(cat.get_name());

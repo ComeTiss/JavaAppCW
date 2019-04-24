@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends BaseAdapter {
     /*** This class provides:
@@ -25,9 +26,11 @@ public class CategoryAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private final ArrayList<Category> categories;
+    private final Context context;
 
     /* Constructor */
     CategoryAdapter(Context c, ArrayList<Category> categories) {
+        this.context =c;
         this.categories = categories;
         this.inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -49,7 +52,7 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
 
         View v = inflater.inflate(R.layout.category_listview_details, null);
         ImageButton deleteCategBtn = (ImageButton) v.findViewById(R.id.deleteTrainingCategory_button);
@@ -65,6 +68,10 @@ public class CategoryAdapter extends BaseAdapter {
             public void onClick(View v) {
                 DBHandler db = new DBHandler(v.getContext());
                 db.deleteOneCategory(category.get_id());
+                Toast.makeText(context, "Category Deleted!", Toast.LENGTH_SHORT).show();
+                ListView CategListView = (ListView) parent.findViewById(R.id.TrainingCategories_ListView);
+                CategoryAdapter categoryAdapter = new CategoryAdapter(parent.getContext(), db.getAllCategoriesByType("1"));
+                CategListView.setAdapter(categoryAdapter);
             }
         });
 
