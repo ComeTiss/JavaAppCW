@@ -38,11 +38,11 @@ public class HomeFragment extends Fragment {
         final TrainingAdapter trainingAdapter = new TrainingAdapter(getActivity(), trainings);
         dataListView.setAdapter(trainingAdapter);
 
+        // Change to training fragment if click on it
         dataListView.setClickable(true);
         dataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Clicked!");
                 Fragment trainingFragment = new TrainingDetailsFragment();
                 Bundle args = new Bundle();
                 args.putInt ("index", position);
@@ -60,8 +60,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        // When click on one training
         return v;
     }
     public void setText (View v, String text) {

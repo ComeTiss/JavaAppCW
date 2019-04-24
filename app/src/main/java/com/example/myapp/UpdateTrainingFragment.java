@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +13,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
-public class CreateTrainingFragment extends Fragment {
+public class UpdateTrainingFragment extends Fragment {
 
     private ArrayList<String> categoriesNames = new ArrayList<>();
-    private final String defaultCategoryName = "Select a Category";
+    private String defaultCategoryName = "Select a Category";
     private DBHandler db;
+    private int trainingId;
 
     private TextView FragmentTitle;
     private Button createBtn;
@@ -37,7 +33,7 @@ public class CreateTrainingFragment extends Fragment {
     private CheckBox FavoriteCheckBox;
     private TextView descriptionEditText;
 
-        @SuppressLint("NewApi")
+    @SuppressLint("NewApi")
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,8 +42,12 @@ public class CreateTrainingFragment extends Fragment {
             final View view = inflater.inflate(R.layout.fragment_create_training, container, false);
             identifyWidgets(view);
 
-            /* Retrieve categories from database & add to dropdown list */
+            /* Retrieve training data */
             this.db = new DBHandler(getContext());
+            this.trainingId = getArguments().getInt("id");
+            loadInitialTraining();
+
+            /* Retrieve categories from database & add to dropdown list */
             loadCategories();
             setDropdown();
 
@@ -56,13 +56,13 @@ public class CreateTrainingFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // Retrieve input data
-                    Training newTraining = newTraining();
+                    Training updatedTraining = newTraining();
                     // check all fields are complete
-                    if (! isInputValid(newTraining)) {
+                    if (! isInputValid(updatedTraining)) {
                         return;
                     }
                     //  Add training to database & switch to home fragment
-                    saveTraining(newTraining);
+                    saveTraining(updatedTraining);
                 }
             });
             return view;
@@ -70,7 +70,7 @@ public class CreateTrainingFragment extends Fragment {
 
     private void identifyWidgets (View view) {
         FragmentTitle = (TextView) view.findViewById(R.id.InputTraining_TitleTextView);
-        FragmentTitle.setText("Create Training");
+        FragmentTitle.setText("Update Training");
         createBtn = (Button) view.findViewById(R.id.CreateTraining_button);
         titleEditText = (EditText) view.findViewById(R.id.trainingTitle_editText);
         timeEditText = (EditText) view.findViewById(R.id.trainingTime_editText);
@@ -79,12 +79,27 @@ public class CreateTrainingFragment extends Fragment {
         descriptionEditText = (TextView) view.findViewById(R.id.TrainingDescription_editText);
     }
 
+    private void loadInitialTraining () {
+        /*
+            Get initial training data from database
+            Initialize fields content with it
+        */
+        Training initialTr = db.getOneTraining(trainingId);
+        titleEditText.setText(initialTr.get_title());
+        timeEditText.setText(initialTr.get_time());
+        descriptionEditText.setText(initialTr.get_description());
+        if (initialTr.get_isFavorites()) {
+            System.out.println("true! select");
+            FavoriteCheckBox.setChecked(true);
+        }
+    }
 
     private void loadCategories () {
         /*
             Load Category objects from database
             Create a new arraylist containing only the category name
          */
+        DBHandler db = new DBHandler(getContext());
         ArrayList<Category> categories = db.getAllCategoriesByType("Training");
         categoriesNames.add(defaultCategoryName);
         for (Category cat : categories) {
@@ -125,16 +140,16 @@ public class CreateTrainingFragment extends Fragment {
             Toast.makeText(getContext(), "Select a Category", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Toast.makeText(getContext(), "Training Created!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Training Updated!", Toast.LENGTH_SHORT).show();
         return true;
     }
 
     private void saveTraining (Training t) {
-         /*
-            Sends new training to database
+        /*
+            Sends updated training to database
             Switch to Home fragment
          */
-        db.addNewTraining(t);
+        db.updateOneTraining(trainingId, t);
         // Switch to Home fragment
         Fragment homeFrag = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFrag).commit();

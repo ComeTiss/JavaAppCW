@@ -4,13 +4,13 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/InputTraining_TitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="79dp"
-        android:text="Create a Training"
+        android:layout_marginTop="30dp"
+        android:text="New Training"
         android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
@@ -18,9 +18,9 @@
         android:id="@+id/trainingTitle_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/InputTraining_TitleTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Title"/>
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/trainingTitle_editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="13dp"
         android:minWidth="215dp" />
 
     <EditText
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/CreateTraining_categorySpinner"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="13dp"
         android:ems="10"
         android:inputType="time"
         android:hint="What time ?"/>
@@ -51,18 +51,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/trainingTime_editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Save in Favorites" />
+
+    <EditText
+        android:id="@+id/TrainingDescription_editText"
+        android:layout_width="330dp"
+        android:minHeight="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TrainingFavorite_checkBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:hint="Training description"/>
 
     <Button
         android:id="@+id/CreateTraining_button"
         android:background="@color/design_default_color_primary"
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TrainingFavorite_checkBox"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="Create" />
-
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:text="Submit" />
 
 </RelativeLayout>

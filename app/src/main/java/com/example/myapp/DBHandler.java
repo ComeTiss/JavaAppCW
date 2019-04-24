@@ -20,6 +20,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_CATEGORY = "category";
     private static final String KEY_TIME = "time";
     private static final String KEY_FAVORITE = "isFavorite";
+    private static final String KEY_DESCRIPTION = "description";
 
     // Categories Table environment variables
     private static final String TABLE_CATEGORY = "categoryDetails";
@@ -39,7 +40,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_TITLE + " TEXT,"
                 + KEY_CATEGORY + " TEXT,"
                 + KEY_TIME + " TEXT,"
-                + KEY_FAVORITE + " BOOLEAN" + ")";
+                + KEY_FAVORITE + " BOOLEAN,"
+                + KEY_DESCRIPTION + " TEXT" + ")";
         db.execSQL(CREATE_TABLE_TRAINING);
 
         String CREATE_TABLE_CATEGORIES = "CREATE TABLE " + TABLE_CATEGORY + "("
@@ -55,7 +57,6 @@ public class DBHandler extends SQLiteOpenHelper {
         // drop table
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRAINING_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
-
         // create table again
         onCreate(db);
     }
@@ -71,14 +72,36 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_TITLE, training.get_title());
         values.put(KEY_CATEGORY, training.get_category());
         values.put(KEY_FAVORITE, training.get_isFavorites());
+        values.put(KEY_DESCRIPTION, training.get_description());
 
         db.insert(TABLE_TRAINING_DETAIL, null, values);
         db.close();
     }
 
-    public boolean deleteOneTraining (int trainingId) {
+    private Training createTrainingFromCursor (Cursor cursor) {
+        Training t = new Training();
+        t.set_id(Integer.parseInt(cursor.getString(0)));
+        t.set_title(cursor.getString(1));
+        t.set_category(cursor.getString(2));
+        t.set_time(cursor.getString(3));
+        t.set_description(cursor.getString(5));
+        if (cursor.getString(4).equals("1")) t.set_isFavorites(true);
+        else t.set_isFavorites(false);
+        return t;
+    }
+
+    public Training getOneTraining (int trainingId) {
+        String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL
+                + " WHERE " + KEY_ID + "=" + trainingId;
+
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TRAINING_DETAIL, KEY_ID + "=" + trainingId, null) > 0;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Training t = new Training();
+
+        if (cursor.moveToFirst()) {
+            t = createTrainingFromCursor (cursor);
+        }
+        return t;
     }
 
     public ArrayList<Training> getAllTrainings () {
@@ -91,12 +114,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Training training = new Training();
-                training.set_id(Integer.parseInt(cursor.getString(0)));
-                training.set_title(cursor.getString(1));
-                training.set_category(cursor.getString(2));
-                training.set_time(cursor.getString(3));
-
+               Training training = createTrainingFromCursor (cursor);
                 trainingsList.add(training);
             } while (cursor.moveToNext());
         }
@@ -114,16 +132,29 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Training training = new Training();
-                training.set_id(Integer.parseInt(cursor.getString(0)));
-                training.set_title(cursor.getString(1));
-                training.set_category(cursor.getString(2));
-                training.set_time(cursor.getString(3));
-
+                Training training = createTrainingFromCursor(cursor);
                 trainingsList.add(training);
             } while (cursor.moveToNext());
         }
         return trainingsList;
+    }
+
+    public boolean deleteOneTraining (int trainingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TRAINING_DETAIL, KEY_ID + "=" + trainingId, null) > 0;
+    }
+
+    public boolean updateOneTraining (int trainingId, Training training) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values  = new ContentValues();
+
+        values.put(KEY_TITLE, training.get_title());
+        values.put(KEY_CATEGORY, training.get_category());
+        values.put(KEY_TIME, training.get_time());
+        values.put(KEY_FAVORITE, training.get_isFavorites());
+        values.put(KEY_DESCRIPTION, training.get_description());
+
+        return db.update(TABLE_TRAINING_DETAIL, values, KEY_ID + "=" + trainingId, null) > 0;
     }
 
     /*** Categories CRUD API (Create, Read, Update, Delete) ***/

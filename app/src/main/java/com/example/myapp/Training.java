@@ -1,32 +1,37 @@
 package com.example.myapp;
 
+import org.w3c.dom.Text;
+
 public class Training {
 
     // Private variables
-    int _id;
-    String _title;
-    String _category;
-    String _time;
-    Boolean _isFavorites;
+    private int _id;
+    private String _title;
+    private String _category;
+    private String _time;
+    private Boolean _isFavorites;
+    private String _description;
 
     //empty constructor
     public Training() {}
 
     // all params constructor
-    public Training(int _id, String _title, String _category, String _time, Boolean _isFavorites) {
+    public Training(int _id, String _title, String _category, String _time, Boolean _isFavorites, String _description) {
         this._id = _id;
         this._title = _title;
         this._category = _category;
         this._time = _time;
         this._isFavorites = _isFavorites;
+        this._description = _description;
     }
 
     // without id constructor
-    public Training(String _title, String _category, String _time, Boolean _isFavorites) {
+    public Training(String _title, String _category, String _time, Boolean _isFavorites, String _description) {
         this._title = _title;
         this._category = _category;
         this._time = _time;
         this._isFavorites = _isFavorites;
+        this._description = _description;
     }
 
     /**** GETTERS ****/
@@ -72,4 +77,11 @@ public class Training {
         this._isFavorites = _isFavorites;
     }
 
+    public String get_description() {
+        return _description;
+    }
+
+    public void set_description(String _description) {
+        this._description = _description;
+    }
 }

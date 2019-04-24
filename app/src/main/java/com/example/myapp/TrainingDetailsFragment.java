@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TrainingDetailsFragment extends Fragment {
 
@@ -19,9 +20,11 @@ public class TrainingDetailsFragment extends Fragment {
         // Brings up layout & identify widgets
         View v = inflater.inflate(R.layout.fragment_training_details, container, false);
         Button deleteBtn = (Button) v.findViewById(R.id.TrainingDetails_deteleBtn);
+        Button updateBtn = (Button) v.findViewById(R.id.TrainingDetails_updateBtn);
         TextView TitleTextView = (TextView) v.findViewById(R.id.TrainingDetails_Title_TextView);
-        TextView CategTextViex = (TextView) v.findViewById(R.id.TrainingDetails_Category_TextView);
+        TextView CategTextView = (TextView) v.findViewById(R.id.TrainingDetails_Category_TextView);
         TextView TimeTextView = (TextView) v.findViewById(R.id.TrainingDetails_TimeValue_TextView);
+        TextView DescriptionTextView = (TextView) v.findViewById(R.id.TrainingDetails_DescriptionContent_TextView);
 
         // Retrieve training from Database
         Bundle args = getArguments();
@@ -31,17 +34,29 @@ public class TrainingDetailsFragment extends Fragment {
 
         // Puts Training info in Fragment
         TitleTextView.setText(training.get_title());
-        CategTextViex.setText(training.get_category());
+        CategTextView.setText(training.get_category());
         TimeTextView.setText(training.get_time());
+        DescriptionTextView.setText(training.get_description());
+
+        // When click 'update' button
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment UpdateFragment = new UpdateTrainingFragment();
+                Bundle args = new Bundle();
+                args.putInt("id", training.get_id());
+                UpdateFragment.setArguments(args);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, UpdateFragment).commit();
+            }
+        });
 
         // When click 'delete" button
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // Delete training from database
                 db.deleteOneTraining(training.get_id());
-
+                Toast.makeText(getContext(), "Training Deleted", Toast.LENGTH_SHORT).show();
                 // Switch to Home fragment
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             }
