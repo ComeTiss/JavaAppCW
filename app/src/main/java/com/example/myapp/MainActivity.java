@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     /*** This class provides:
@@ -16,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
      * create bottom navigation menu
 
      ***/
+    private String homeFragmentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+    public String getHomeDate() {
+        return homeFragmentDate;
+    }
+
+    public void setHomeDate(String homeDate) {
+        this.homeFragmentDate = homeDate;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,5 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
     };
+
+
 }
 

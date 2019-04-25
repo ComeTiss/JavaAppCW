@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
     /*** This class provides:
@@ -25,13 +26,14 @@ public class HomeFragment extends Fragment {
 
      ***/
 
-
     private ArrayList<Training> trainings = new ArrayList<>();
 
     // layout widgets variables
+    private TextView dateTextView;
     private TextView EmptyDayMsgText;
     private ListView dataListView;
     private FloatingActionButton CreateItem_FaBtn;
+    private FloatingActionButton Calendar_FaBtn;
 
     @Nullable
     @Override
@@ -41,8 +43,12 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         identifyWidgets(v);
 
+        // get home page day
+        String date = ((MainActivity) getActivity()).getHomeDate();
+        dateTextView.setText(date);
+
         // Loading user data from database
-        loadTrainings(v);
+        loadTrainings(v, date);
 
         // display user's trainings
         final TrainingAdapter trainingAdapter = new TrainingAdapter(getActivity(), trainings);
@@ -61,18 +67,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Calendar_FaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalendarFragment()).commit();
+            }
+        });
+
         return v;
     }
 
     private void identifyWidgets (View v) {
+        dateTextView = (TextView) v.findViewById(R.id.homeDay_TitleView);
         dataListView = (ListView) v.findViewById(R.id.HomeListView);
-        CreateItem_FaBtn = (FloatingActionButton) v.findViewById(R.id.Add_floatingActionButton);
         EmptyDayMsgText = (TextView) v.findViewById(R.id.EmptyDayMsgText);
+        CreateItem_FaBtn = (FloatingActionButton) v.findViewById(R.id.Add_floatingActionButton);
+        Calendar_FaBtn = (FloatingActionButton) v.findViewById(R.id.Calendar_floatingActionButton);
     }
 
-    private void loadTrainings (View v) {
+    private void loadTrainings (View v, String date) {
         DBHandler db = new DBHandler(getContext());
-        this.trainings = db.getAllTrainings();
+        ArrayList<Training> results = db.getAllTrainings();
+        for (Training t : results) {
+            String trainingDate = t.get_date().format(new Date());
+            if (trainingDate.equals(date)) {
+                this.trainings.add(t);
+            }
+        }
+
         if (trainings.size() == 0) {
             EmptyDayMsgText.setText("Nothing planned yet");
         }

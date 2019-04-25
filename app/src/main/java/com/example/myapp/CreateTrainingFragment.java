@@ -20,7 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CreateTrainingFragment extends Fragment {
@@ -58,9 +62,10 @@ public class CreateTrainingFragment extends Fragment {
                     // Retrieve input data
                     Training newTraining = newTraining();
                     // check all fields are complete
+                   /*
                     if (! isInputValid(newTraining)) {
                         return;
-                    }
+                    } */
                     //  Add training to database & switch to home fragment
                     saveTraining(newTraining);
                 }
@@ -112,7 +117,11 @@ public class CreateTrainingFragment extends Fragment {
             isFavorite = true;
         }
         String description = descriptionEditText.getText().toString();
-        Training newTraining = new Training(title, category, time, isFavorite, description);
+
+        String dateHomeFragment = ((MainActivity) getActivity()).getHomeDate();
+        SimpleDateFormat date = new SimpleDateFormat(dateHomeFragment);
+
+        Training newTraining = new Training(title, category, time, isFavorite, description, date);
         return  newTraining;
     }
 

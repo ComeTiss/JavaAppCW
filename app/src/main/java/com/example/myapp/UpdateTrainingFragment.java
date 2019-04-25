@@ -16,7 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class UpdateTrainingFragment extends Fragment {
 
@@ -24,6 +26,7 @@ public class UpdateTrainingFragment extends Fragment {
     private String defaultCategoryName = "Select a Category";
     private DBHandler db;
     private int trainingId;
+    private Training initialTr;
 
     private TextView FragmentTitle;
     private Button createBtn;
@@ -84,12 +87,11 @@ public class UpdateTrainingFragment extends Fragment {
             Get initial training data from database
             Initialize fields content with it
         */
-        Training initialTr = db.getOneTraining(trainingId);
+        initialTr = db.getOneTraining(trainingId);
         titleEditText.setText(initialTr.get_title());
         timeEditText.setText(initialTr.get_time());
         descriptionEditText.setText(initialTr.get_description());
         if (initialTr.get_isFavorites()) {
-            System.out.println("true! select");
             FavoriteCheckBox.setChecked(true);
         }
     }
@@ -127,7 +129,10 @@ public class UpdateTrainingFragment extends Fragment {
             isFavorite = true;
         }
         String description = descriptionEditText.getText().toString();
-        Training newTraining = new Training(title, category, time, isFavorite, description);
+
+        SimpleDateFormat date = initialTr.get_date();
+
+        Training newTraining = new Training(title, category, time, isFavorite, description, date);
         return  newTraining;
     }
 

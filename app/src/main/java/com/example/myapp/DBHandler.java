@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DBHandler extends SQLiteOpenHelper {
     /*** This class provides:
@@ -32,6 +35,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_TIME = "time";
     private static final String KEY_FAVORITE = "isFavorite";
     private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_DATE = "date";
 
     // Categories Table environment variables
     private static final String TABLE_CATEGORY = "categoryDetails";
@@ -57,7 +61,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_CATEGORY + " TEXT,"
                 + KEY_TIME + " TEXT,"
                 + KEY_FAVORITE + " BOOLEAN,"
-                + KEY_DESCRIPTION + " TEXT" + ")";
+                + KEY_DESCRIPTION + " TEXT,"
+                + KEY_DATE + " TEXT" + ")";
+
         db.execSQL(CREATE_TABLE_TRAINING);
 
         String CREATE_TABLE_CATEGORIES = "CREATE TABLE " + TABLE_CATEGORY + "("
@@ -95,6 +101,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_CATEGORY, training.get_category());
         values.put(KEY_FAVORITE, training.get_isFavorites());
         values.put(KEY_DESCRIPTION, training.get_description());
+        values.put(KEY_DATE, training.get_date().format(new Date()));
 
         db.insert(TABLE_TRAINING_DETAIL, null, values);
         db.close();
@@ -114,8 +121,10 @@ public class DBHandler extends SQLiteOpenHelper {
         t.set_category(cursor.getString(2));
         t.set_time(cursor.getString(3));
         t.set_description(cursor.getString(5));
+        t.set_date(new SimpleDateFormat(cursor.getString(6)));
         if (cursor.getString(4).equals("1")) t.set_isFavorites(true);
         else t.set_isFavorites(false);
+
         return t;
     }
 
@@ -145,10 +154,33 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-
         if (cursor.moveToFirst()) {
             do {
                Training training = createTrainingFromCursor (cursor);
+                trainingsList.add(training);
+            } while (cursor.moveToNext());
+        }
+        return trainingsList;
+    }
+
+    public ArrayList<Training> getAllTrainingsOneDay (String date) {
+        /*
+            Params: date
+            Purpose: query all trainings in database matching given date
+
+         */
+        ArrayList<Training> trainingsList = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL
+                + " WHERE " + KEY_DATE + "=" + date;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                System.out.println("found one!");
+                Training training = createTrainingFromCursor(cursor);
                 trainingsList.add(training);
             } while (cursor.moveToNext());
         }
@@ -201,6 +233,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_TIME, training.get_time());
         values.put(KEY_FAVORITE, training.get_isFavorites());
         values.put(KEY_DESCRIPTION, training.get_description());
+        values.put(KEY_DATE, training.get_date().format(new Date()));
 
         return db.update(TABLE_TRAINING_DETAIL, values, KEY_ID + "=" + trainingId, null) > 0;
     }
