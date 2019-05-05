@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class TrainingDetailsFragment extends Fragment {
     /*** This class provides:
 
@@ -20,12 +23,8 @@ public class TrainingDetailsFragment extends Fragment {
 
      ***/
 
-    private Button deleteBtn;
-    private Button updateBtn;
-    private TextView TitleTextView;
-    private TextView CategTextView;
-    private TextView TimeTextView;
-    private TextView DescriptionTextView;
+    private Button deleteBtn, updateBtn;
+    private TextView TitleTextView, CategTextView, TimeTextView, DescriptionTextView;
 
     private DBHandler db;
     private Training training;
@@ -38,9 +37,10 @@ public class TrainingDetailsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_training_details, container, false);
         identifyWidgets(v);
         // Retrieve training from Database
-        loadTraining();
+        String date = ((MainActivity) getActivity()).getHomeDate();
+        loadTraining(date);
         // Shows training info on the fragment
-        diplayTraining();
+        displayTraining();
 
         // When click 'update' button
         updateBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +72,16 @@ public class TrainingDetailsFragment extends Fragment {
         DescriptionTextView = (TextView) v.findViewById(R.id.TrainingDetails_DescriptionContent_TextView);
     }
 
-    private void loadTraining () {
+    private void loadTraining (String date) {
+        // Get trainingId from Fragment arguments
+        // Query database for the training object with trainingId
         Bundle args = getArguments();
         int index = args.getInt("index", 0);
         db = new DBHandler(getContext());
-        training = db.getAllTrainings().get(index);
+        training = db.getOneTraining(index);
     }
 
-    private void diplayTraining () {
+    private void displayTraining () {
         TitleTextView.setText(training.get_title());
         CategTextView.setText(training.get_category());
         TimeTextView.setText(training.get_time());

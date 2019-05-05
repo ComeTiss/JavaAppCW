@@ -163,30 +163,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return trainingsList;
     }
 
-    public ArrayList<Training> getAllTrainingsOneDay (String date) {
-        /*
-            Params: date
-            Purpose: query all trainings in database matching given date
-
-         */
-        ArrayList<Training> trainingsList = new ArrayList<>();
-
-        String selectQuery = "SELECT * FROM " + TABLE_TRAINING_DETAIL
-                + " WHERE " + KEY_DATE + "=" + date;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                System.out.println("found one!");
-                Training training = createTrainingFromCursor(cursor);
-                trainingsList.add(training);
-            } while (cursor.moveToNext());
-        }
-        return trainingsList;
-    }
-
     public ArrayList<Training> getFavoritesTrainings () {
         /*
             Purpose: query all trainings in database with isFavorite = true

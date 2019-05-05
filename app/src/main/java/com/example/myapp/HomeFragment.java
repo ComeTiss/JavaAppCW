@@ -29,11 +29,9 @@ public class HomeFragment extends Fragment {
     private ArrayList<Training> trainings = new ArrayList<>();
 
     // layout widgets variables
-    private TextView dateTextView;
-    private TextView EmptyDayMsgText;
+    private TextView dateTextView, EmptyDayMsgText;
     private ListView dataListView;
-    private FloatingActionButton CreateItem_FaBtn;
-    private FloatingActionButton Calendar_FaBtn;
+    private FloatingActionButton CreateItem_FaBtn, Calendar_FaBtn;
 
     @Nullable
     @Override
@@ -48,7 +46,7 @@ public class HomeFragment extends Fragment {
         dateTextView.setText(date);
 
         // Loading user data from database
-        loadTrainings(v, date);
+        loadTrainings(date);
 
         // display user's trainings
         final TrainingAdapter trainingAdapter = new TrainingAdapter(getActivity(), trainings);
@@ -62,7 +60,7 @@ public class HomeFragment extends Fragment {
         CreateItem_FaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpCreateItemSelectType popup = new PopUpCreateItemSelectType();
+                PopUpCreateTraining popup = new PopUpCreateTraining();
                 popup.show(getFragmentManager(), "CreateItemFragment");
             }
         });
@@ -70,7 +68,7 @@ public class HomeFragment extends Fragment {
         Calendar_FaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalendarFragment()).commit();
+                SwitchFragment(new CalendarFragment());
             }
         });
 
@@ -85,7 +83,7 @@ public class HomeFragment extends Fragment {
         Calendar_FaBtn = (FloatingActionButton) v.findViewById(R.id.Calendar_floatingActionButton);
     }
 
-    private void loadTrainings (View v, String date) {
+    private void loadTrainings (String date) {
         DBHandler db = new DBHandler(getContext());
         ArrayList<Training> results = db.getAllTrainings();
         for (Training t : results) {
@@ -94,23 +92,28 @@ public class HomeFragment extends Fragment {
                 this.trainings.add(t);
             }
         }
-
         if (trainings.size() == 0) {
             EmptyDayMsgText.setText("Nothing planned yet");
         }
     }
-
+    // Displays Training page when click on it
     private AdapterView.OnItemClickListener AdapterViewListener () {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int trainingId = trainings.get(position).get_id();
                 Fragment trainingFragment = new TrainingDetailsFragment();
                 Bundle args = new Bundle();
-                args.putInt ("index", position);
+                args.putInt ("index", trainingId);
                 trainingFragment.setArguments(args);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, trainingFragment).commit();
+                SwitchFragment(trainingFragment);
             }
         };
+    }
+
+    // Switch to new fragment
+    private void SwitchFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
 }

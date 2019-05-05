@@ -23,20 +23,17 @@ import java.util.Date;
 public class UpdateTrainingFragment extends Fragment {
 
     private ArrayList<String> categoriesNames = new ArrayList<>();
-    private String defaultCategoryName = "Select a Category";
+    private final String defaultCategoryName = "Select a Category";
     private DBHandler db;
     private int trainingId;
     private Training initialTr;
 
-    private TextView FragmentTitle;
+    private TextView FragmentTitle, descriptionEditText;
     private Button createBtn;
-    private EditText titleEditText;
-    private EditText timeEditText;
+    private EditText titleEditText, timeEditText;
     private Spinner spinner;
     private CheckBox FavoriteCheckBox;
-    private TextView descriptionEditText;
 
-    @SuppressLint("NewApi")
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,15 +88,13 @@ public class UpdateTrainingFragment extends Fragment {
         titleEditText.setText(initialTr.get_title());
         timeEditText.setText(initialTr.get_time());
         descriptionEditText.setText(initialTr.get_description());
-        if (initialTr.get_isFavorites()) {
-            FavoriteCheckBox.setChecked(true);
-        }
+        FavoriteCheckBox.setChecked(initialTr.get_isFavorites());
     }
 
     private void loadCategories () {
         /*
             Load Category objects from database
-            Create a new arraylist containing only the category name
+            Create a new ArrayList containing only the category name
          */
         DBHandler db = new DBHandler(getContext());
         ArrayList<Category> categories = db.getAllCategoriesByType("1");
@@ -124,12 +119,8 @@ public class UpdateTrainingFragment extends Fragment {
         String title = titleEditText.getText().toString();
         String category = spinner.getSelectedItem().toString();
         String time = timeEditText.getText().toString();
-        Boolean isFavorite = false;
-        if (FavoriteCheckBox.isChecked()) {
-            isFavorite = true;
-        }
+        Boolean isFavorite = FavoriteCheckBox.isChecked();
         String description = descriptionEditText.getText().toString();
-
         SimpleDateFormat date = initialTr.get_date();
 
         Training newTraining = new Training(title, category, time, isFavorite, description, date);
@@ -143,14 +134,14 @@ public class UpdateTrainingFragment extends Fragment {
             If all conditions respected, displays a Toast popup at bottom of screen
          */
         if (t.get_title().isEmpty() || t.get_time().isEmpty() || t.get_description().isEmpty()) {
-            Toast.makeText(getContext(), "Complete all fields", Toast.LENGTH_SHORT).show();
+            displayNotification("Complete all fields");
             return false;
         }
         if (t.get_category().equals(defaultCategoryName)) {
-            Toast.makeText(getContext(), "Select a Category", Toast.LENGTH_SHORT).show();
+            displayNotification("Select a Category");
             return false;
         }
-        Toast.makeText(getContext(), "Training Updated!", Toast.LENGTH_SHORT).show();
+        displayNotification("Training Created!");
         return true;
     }
 
@@ -163,5 +154,9 @@ public class UpdateTrainingFragment extends Fragment {
         // Switch to Home fragment
         Fragment homeFrag = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFrag).commit();
+    }
+
+    private void displayNotification (String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

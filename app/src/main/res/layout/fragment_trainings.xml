@@ -18,12 +18,12 @@
                 android:text="Categories"
                 android:textSize="15sp"
                 android:textColor="@color/design_default_color_primary_dark"
-                android:id="@+id/tvTrainingsCateg"
+                android:id="@+id/TrainingsCateg_TextView"
                 android:layout_height="wrap_content" />
             <View
                 android:layout_width="match_parent"
                 android:layout_gravity="bottom"
-                android:id="@+id/view1"
+                android:id="@+id/viewCategory"
                 android:background="@color/design_default_color_primary_dark"
                 android:layout_height="2dp"/>
         </FrameLayout>
@@ -34,8 +34,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
-                android:text="Favorites"
-                android:id="@+id/tvTrainingsFav"
+                android:text="Favourites"
+                android:id="@+id/TrainingsFav_TextView"
                 android:textColor="@color/design_default_color_primary_dark"
                 android:textSize="15sp"
                 android:layout_height="wrap_content" />
@@ -44,7 +44,7 @@
                 android:visibility="invisible"
                 android:layout_gravity="bottom"
                 android:background="@color/design_default_color_primary_dark"
-                android:id="@+id/view2"
+                android:id="@+id/viewFavourites"
                 android:layout_height="2dp"/>
         </FrameLayout>
     </com.google.android.flexbox.FlexboxLayout>

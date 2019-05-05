@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         // Set default view to 'Home'
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        loadFragment(new HomeFragment());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new
@@ -51,19 +51,18 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
-                            /*
-                        case R.id.nav_meals:
-                            selectedFragment = new MealsFragment();
-                            break; */
+
                         case R.id.nav_trainings:
                             selectedFragment = new TrainingsFragment();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                    loadFragment(selectedFragment);
                     return true;
                 }
     };
 
-
+    private void loadFragment (Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
 }
 

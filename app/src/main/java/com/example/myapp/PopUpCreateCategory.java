@@ -22,20 +22,20 @@ public class PopUpCreateCategory extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.dialog_create_categ, null))
                 // Add action buttons
-                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.positive_popup, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         EditText editTextCategory = (EditText) getDialog().findViewById(R.id.newCategory_editText);
                         String name = editTextCategory.getText().toString();
 
                         if (name.isEmpty()) {
-                            Toast.makeText(getContext(), "Couldn't create Category", Toast.LENGTH_SHORT).show();
+                            displayNotification("Couldn't create category");
                             return;
                         }
                         saveCategory(name);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.negative_popup, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         PopUpCreateCategory.this.getDialog().cancel();
                     }
@@ -52,6 +52,10 @@ public class PopUpCreateCategory extends DialogFragment {
         ListView categoryListView = (ListView) getActivity().findViewById(R.id.TrainingCategories_ListView);
         CategoryAdapter categAdapter = new CategoryAdapter(getActivity(), db.getAllCategoriesByType("1"));
         categoryListView .setAdapter(categAdapter);
-        Toast.makeText(getContext(), "Category added!", Toast.LENGTH_SHORT).show();
+        displayNotification("Category added!");
+    }
+
+    private void displayNotification (String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

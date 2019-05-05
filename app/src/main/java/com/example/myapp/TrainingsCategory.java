@@ -47,8 +47,4 @@ public class TrainingsCategory extends Fragment {
 
         return v;
     }
-
-    public void ListenForNewCategroy (Category c) {
-        this.categories.add(c);
-    }
 }

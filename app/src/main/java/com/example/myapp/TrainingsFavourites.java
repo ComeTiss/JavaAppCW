@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrainingsFavorites extends Fragment {
+public class TrainingsFavourites extends Fragment {
 
     ArrayList<Training> trainings = new ArrayList<>();
 

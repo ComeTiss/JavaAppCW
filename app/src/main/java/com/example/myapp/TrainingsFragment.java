@@ -11,71 +11,73 @@ import android.widget.TextView;
 
 
 public class TrainingsFragment extends Fragment {
-    FrameLayout seller, buyer;
-    View view1, view2;
-    TextView tvseller, tvbuyer;
+
+    /*** This class provides:
+     * Displays 2 tabs at top of the layout: Favourites & Category
+     * Allow user to switch from one to the other by clicking on the tab
+     * Each tab has its own content.
+
+     ***/
+
+    // Widgets variables
+    FrameLayout CategoryFrameLayout, FavouritesFrameLayout;
+    View viewCategory, viewFavourites;
+    TextView categoryTextView, favouritesTextView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View fragment_three = inflater.inflate(R.layout.fragment_trainings, container, false);
-        //INIT VIEWS
-        init(fragment_three);
-        //SET TABS ONCLICK
-        seller.setOnClickListener(clik);
-        buyer.setOnClickListener(clik);
-        //LOAD PAGE FOR FIRST
-        loadPage(new TrainingsCategory());
-        tvseller.setTextColor(getActivity().getResources().getColor(R.color.design_default_color_primary_dark));
-        return fragment_three;
+
+        // Brings up layout & identify widgets
+        View v = inflater.inflate(R.layout.fragment_trainings, container, false);
+        identifyWidgets(v);
+        // Shows Category tab by default
+        SwitchFragment(new TrainingsCategory());
+        categoryTextView.setTextColor(getActivity().getResources().getColor(R.color.design_default_color_primary_dark));
+        // Handles clicks on tabs
+        CategoryFrameLayout.setOnClickListener(clik);
+        FavouritesFrameLayout.setOnClickListener(clik);
+
+        return v;
     }
-    public void init(View v){
-        seller = v.findViewById(R.id.training_categ);
-        buyer = v.findViewById(R.id.training_fav);
-        view1 = v.findViewById(R.id.view1);
-        view2 = v.findViewById(R.id.view2);
-        tvseller = v.findViewById(R.id.tvTrainingsCateg);
-        tvbuyer = v.findViewById(R.id.tvTrainingsFav);
-    }
-    //ONCLICK LISTENER
+
+    // On click Listener
     public View.OnClickListener clik = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.training_categ:
-                    //ONSELLER CLICK
-                    //LOAD SELLER FRAGMENT CLASS
-                    loadPage(new TrainingsCategory());
-                    //WHEN CLICK TEXT COLOR CHANGED
-                    tvseller.setTextColor(getActivity().getResources().getColor(R.color.design_default_color_primary_dark));
-                    tvbuyer.setTextColor(getActivity().getResources().getColor(R.color.design_default_color_primary_dark));
-                    //VIEW VISIBILITY WHEN CLICKED
-                    view1.setVisibility(View.VISIBLE);
-                    view2.setVisibility(View.INVISIBLE);
-                    break;
-                case R.id.training_fav:
-                    //ONBUYER CLICK
-                    //LOAD BUYER FRAGMENT CLASS
-                    loadPage(new TrainingsFavorites());
 
-                    //WHEN CLICK TEXT COLOR CHANGED
-                    tvseller.setTextColor(getActivity().getResources().getColor(R.color.design_default_color_primary_dark));
-                    tvbuyer.setTextColor(getActivity().getResources().getColor(R.color.design_default_color_primary_dark));
-                    //VIEW VISIBILITY WHEN CLICKED
-                    view1.setVisibility(View.INVISIBLE);
-                    view2.setVisibility(View.VISIBLE);
+                // Load Category tab
+                case R.id.training_categ:
+                    SwitchFragment(new TrainingsCategory());
+                    SwitchView(viewFavourites, viewCategory);
+                    break;
+                // Load Favourites tab
+                case R.id.training_fav:
+                    SwitchFragment(new TrainingsFavourites());
+                    SwitchView(viewCategory, viewFavourites);
                     break;
             }
         }
     };
-    //LOAD PAGE FRAGMENT METHOD
-    private boolean loadPage(Fragment fragment) {
-        if (fragment != null) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.containerpage, fragment)
-                    .commit();
-            return true;
-        }
-        return false;
+
+    private void identifyWidgets(View v){
+        CategoryFrameLayout = v.findViewById(R.id.training_categ);
+        FavouritesFrameLayout = v.findViewById(R.id.training_fav);
+        viewCategory = v.findViewById(R.id.viewCategory);
+        viewFavourites = v.findViewById(R.id.viewFavourites);
+        categoryTextView = v.findViewById(R.id.TrainingsCateg_TextView);
+        favouritesTextView = v.findViewById(R.id.TrainingsFav_TextView);
+    }
+
+    // Switch to new fragment
+    private void SwitchFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerpage, fragment).commit();
+    }
+
+    // When change tab, hide old view and show new view
+    private void SwitchView (View ViewToHide, View ViewToShow) {
+        ViewToHide.setVisibility(View.INVISIBLE);
+        ViewToShow.setVisibility(View.VISIBLE);
     }
 }

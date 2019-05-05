@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 
-public class PopUpCreateItemSelectType extends DialogFragment {
+public class PopUpCreateTraining extends DialogFragment {
     /*** This class provides:
 
      * generates PopUp window with 2 buttons
@@ -22,16 +22,16 @@ public class PopUpCreateItemSelectType extends DialogFragment {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("What would you like to create ?")
+        builder.setMessage("Add a new Training on this day?")
 
-                .setPositiveButton("Meal", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CreateMealFragment()).commit();
-                    }
-                })
-                .setNegativeButton("Training", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.positive_popup, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CreateTrainingFragment()).commit();
+                    }
+                })
+                .setNegativeButton(R.string.negative_popup, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        PopUpCreateTraining.this.getDialog().cancel();
                     }
                 });
         // Create the AlertDialog object and return it

@@ -33,15 +33,12 @@ public class CreateTrainingFragment extends Fragment {
     private final String defaultCategoryName = "Select a Category";
     private DBHandler db;
 
-    private TextView FragmentTitle;
+    private TextView FragmentTitle, descriptionEditText;
+    private EditText titleEditText, timeEditText;
     private Button createBtn;
-    private EditText titleEditText;
-    private EditText timeEditText;
     private Spinner spinner;
     private CheckBox FavoriteCheckBox;
-    private TextView descriptionEditText;
 
-        @SuppressLint("NewApi")
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,14 +57,13 @@ public class CreateTrainingFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // Retrieve input data
-                    Training newTraining = newTraining();
+                    Training t = newTraining();
                     // check all fields are complete
-                   /*
-                    if (! isInputValid(newTraining)) {
+                    if (! isInputValid(t)) {
                         return;
-                    } */
+                    }
                     //  Add training to database & switch to home fragment
-                    saveTraining(newTraining);
+                    saveTraining(t);
                 }
             });
             return view;
@@ -132,14 +128,14 @@ public class CreateTrainingFragment extends Fragment {
             If all conditions respected, displays a Toast popup at bottom of screen
          */
         if (t.get_title().isEmpty() || t.get_time().isEmpty() || t.get_description().isEmpty()) {
-            Toast.makeText(getContext(), "Complete all fields", Toast.LENGTH_SHORT).show();
+            displayNotification("Complete all fields");
             return false;
         }
         if (t.get_category().equals(defaultCategoryName)) {
-            Toast.makeText(getContext(), "Select a Category", Toast.LENGTH_SHORT).show();
+            displayNotification("Select a Category");
             return false;
         }
-        Toast.makeText(getContext(), "Training Created!", Toast.LENGTH_SHORT).show();
+        displayNotification("Training Created!");
         return true;
     }
 
@@ -149,8 +145,11 @@ public class CreateTrainingFragment extends Fragment {
             Switch to Home fragment
          */
         db.addNewTraining(t);
-        // Switch to Home fragment
         Fragment homeFrag = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFrag).commit();
+    }
+
+    private void displayNotification (String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
